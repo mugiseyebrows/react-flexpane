@@ -1,6 +1,6 @@
 {
   "name": "react-flexpane",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Basic layout manager based on flexbox",
   "repository": {
     "type": "git",
