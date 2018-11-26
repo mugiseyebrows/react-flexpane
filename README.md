@@ -1,5 +1,5 @@
 # About
-Basic layout window manager based on flexbox
+Basic layout manager based on flexbox
 
 # Usage
 
