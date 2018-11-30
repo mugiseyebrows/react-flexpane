@@ -38,6 +38,7 @@
   "scripts": {
     "start": "webpack-dev-server --mode development",
     "pack": "rm -rf dist && babel src -d dist --copy-files",
+    "repack": "babel src -d dist --copy-files --source-maps",
     "build": "webpack --mode production"
   },
   "license": "MIT"
