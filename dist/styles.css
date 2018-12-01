@@ -11,7 +11,7 @@
     padding: 0 10px;
 }
 
-.flexpane-buttons {
+.flexpane-bar {
     display: flex;
     list-style: none;
     border-bottom: .05rem solid #e7e9ed;
@@ -21,6 +21,20 @@
     /*font-size: 0;*/
     background-color: #FCFCFC;
     min-height: 22px;
+}
+
+.flexpane-buttons {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.flexpane-buttons li {
+    display: inline;
+}
+
+.flexpane-buttons ul {
+    display: inline;
 }
 
 .flexpane-buttons button.flexpane-resize {

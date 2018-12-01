@@ -23,42 +23,42 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+// nodemon -w src --exec npm run repack
+
+
 var FlexPaneBar = exports.FlexPaneBar = function FlexPaneBar(props) {
-
-    console.log('FlexPaneBar.props', props);
-
+    var buttonProps = props.buttonProps;
     var children = _react2.default.Children.map(props.children, function (child) {
         if (child.type.name == 'FlexPaneButtons') {
-
-            ////console.log('FlexPaneBar React.Children.map', props)
-
-            return _react2.default.cloneElement(child, props);
+            var buttons = _react2.default.cloneElement(child, { buttonProps: buttonProps });
+            return buttons;
         }
         return child;
     });
-
-    //console.log('children',children)
-
     return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
+        "div",
+        { className: "flexpane-bar" },
         children
     );
 };
 
 var FlexPaneTitle = exports.FlexPaneTitle = function FlexPaneTitle(props) {
     return _react2.default.createElement(
-        "div",
+        "span",
         null,
         "FlexPaneTitle test"
     );
 };
 
+/* 
+<li key="3" className="flexpane-title">{buttonProps.title}</li>
+*/
+
 var FlexPaneButtons = exports.FlexPaneButtons = function FlexPaneButtons(props) {
 
-    //console.log('FlexPaneButtons.props',props)
+    var buttonProps = props.buttonProps;
 
-    var mode = props.modes[props.index];
+    var mode = buttonProps.index !== undefined ? buttonProps.modes[buttonProps.index] : "normal";
     var classNames1 = (0, _classnames2.default)("flexpane-resize", "flexpane-maximize", { "flexpane-button-active": mode !== "maximized" });
     var classNames2 = (0, _classnames2.default)("flexpane-resize", "flexpane-normalize", { "flexpane-button-active": mode !== "normal" });
     var classNames3 = (0, _classnames2.default)("flexpane-resize", "flexpane-hide", { "flexpane-button-active": mode !== "hidden" });
@@ -75,7 +75,7 @@ var FlexPaneButtons = exports.FlexPaneButtons = function FlexPaneButtons(props) 
             _react2.default.createElement(
                 "button",
                 { className: classNames1, onClick: function onClick() {
-                        props.onButtonClick(props.index, "maximized");
+                        buttonProps.onButtonClick(buttonProps.index, "maximized");
                     } },
                 _react2.default.createElement(
                     "svg",
@@ -90,7 +90,7 @@ var FlexPaneButtons = exports.FlexPaneButtons = function FlexPaneButtons(props) 
             _react2.default.createElement(
                 "button",
                 { className: classNames2, onClick: function onClick() {
-                        props.onButtonClick(props.index, "normal");
+                        buttonProps.onButtonClick(buttonProps.index, "normal");
                     } },
                 _react2.default.createElement(
                     "svg",
@@ -105,7 +105,7 @@ var FlexPaneButtons = exports.FlexPaneButtons = function FlexPaneButtons(props) 
             _react2.default.createElement(
                 "button",
                 { className: classNames3, onClick: function onClick() {
-                        props.onButtonClick(props.index, "hidden");
+                        buttonProps.onButtonClick(buttonProps.index, "hidden");
                     } },
                 _react2.default.createElement(
                     "svg",
@@ -113,11 +113,6 @@ var FlexPaneButtons = exports.FlexPaneButtons = function FlexPaneButtons(props) 
                     _react2.default.createElement("path", { d: "M14.77,23.795L5.185,14.21c-0.879-0.879-0.879-2.317,0-3.195l0.8-0.801c0.877-0.878,2.316-0.878,3.194,0  l7.315,7.315l7.316-7.315c0.878-0.878,2.317-0.878,3.194,0l0.8,0.801c0.879,0.878,0.879,2.316,0,3.195l-9.587,9.585  c-0.471,0.472-1.104,0.682-1.723,0.647C15.875,24.477,15.243,24.267,14.77,23.795z", fill: "#515151" })
                 )
             )
-        ),
-        _react2.default.createElement(
-            "li",
-            { key: "3", className: "flexpane-title" },
-            props.title
         )
     );
 };
@@ -138,9 +133,12 @@ var FlexPane = exports.FlexPane = function (_React$Component) {
     _createClass(FlexPane, [{
         key: "render",
         value: function render() {
-            var _this2 = this;
 
-            var mode = this.props.modes[this.props.index];
+            var buttonProps = this.props.buttonProps;
+
+            console.log('FlexPane.render buttonProps', buttonProps);
+
+            var mode = buttonProps.modes[buttonProps.index];
 
             var classNames_ = {
                 "flexpane-pane-normal": mode === "normal",
@@ -154,29 +152,17 @@ var FlexPane = exports.FlexPane = function (_React$Component) {
 
             var refPane = this.props.refPane || this.refPane;
 
-            var bar = null;
+            //console.log('this.props',this.props)
 
-            console.log('this.props', this.props);
+            var children = _react2.default.Children.toArray(this.props.children);
 
-            var children = _react2.default.Children.map(this.props.children, function (child) {
-                if (child.type.name == 'FlexPaneBar') {
+            var bar = void 0;
 
-                    //console.log('barProps',barProps)
-                    bar = _react2.default.cloneElement(child, _this2.props);
-                    console.log('bar', bar);
-                    return null;
-                }
-                return child;
-            });
-
-            if (bar === null) {
-                //console.log('bar === null')
-                bar = _react2.default.createElement(
-                    FlexPaneBar,
-                    barProps,
-                    _react2.default.createElement(FlexPaneButtons, null),
-                    _react2.default.createElement(FlexPaneTitle, null)
-                );
+            if (children[0].type.name === 'FlexPaneBar') {
+                bar = _react2.default.cloneElement(children[0], { buttonProps: buttonProps });
+                children = children.slice(1);
+            } else {
+                bar = null;
             }
 
             return _react2.default.createElement(
@@ -201,18 +187,18 @@ var FlexPaneContainer = exports.FlexPaneContainer = function (_React$Component2)
     function FlexPaneContainer(props) {
         _classCallCheck(this, FlexPaneContainer);
 
-        var _this3 = _possibleConstructorReturn(this, (FlexPaneContainer.__proto__ || Object.getPrototypeOf(FlexPaneContainer)).call(this, props));
+        var _this2 = _possibleConstructorReturn(this, (FlexPaneContainer.__proto__ || Object.getPrototypeOf(FlexPaneContainer)).call(this, props));
 
-        var modes = _react2.default.Children.map(_this3.props.children, function (child, index) {
+        var modes = _react2.default.Children.map(_this2.props.children, function (child, index) {
             return child.props.mode || "normal";
         });
 
-        _this3.state = {
+        _this2.state = {
             modes: modes
         };
 
-        _this3.handleButtonClick = _this3.handleButtonClick.bind(_this3);
-        return _this3;
+        _this2.handleButtonClick = _this2.handleButtonClick.bind(_this2);
+        return _this2;
     }
 
     _createClass(FlexPaneContainer, [{
@@ -230,10 +216,11 @@ var FlexPaneContainer = exports.FlexPaneContainer = function (_React$Component2)
     }, {
         key: "render",
         value: function render() {
-            var _this4 = this;
+            var _this3 = this;
 
             var children = _react2.default.Children.map(this.props.children, function (child, index) {
-                return _react2.default.cloneElement(child, { key: index, modes: _this4.state.modes, index: index, onButtonClick: _this4.handleButtonClick });
+                var buttonProps = { key: index, modes: _this3.state.modes, index: index, onButtonClick: _this3.handleButtonClick };
+                return _react2.default.cloneElement(child, { buttonProps: buttonProps });
             });
             return _react2.default.createElement(
                 "div",
