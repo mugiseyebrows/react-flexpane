@@ -23,6 +23,11 @@
     min-height: 22px;
 }
 
+.flexpane-title {
+    font-style: italic;
+    padding: 0 5px;
+}
+
 .flexpane-buttons {
     display: inline;
     margin: 0;
