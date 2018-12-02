@@ -21,6 +21,7 @@
     /*font-size: 0;*/
     background-color: #FCFCFC;
     min-height: 22px;
+    align-items: center;
 }
 
 .flexpane-title {
