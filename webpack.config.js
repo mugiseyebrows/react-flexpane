@@ -1,8 +1,5 @@
 const path = require('path')
 
-var libraryName = 'react-flexpane'
-var outputFile = libraryName + '.min.js'
-
 module.exports = {
     entry: __dirname + '/src/index.js',
     module: {
@@ -16,8 +13,7 @@ module.exports = {
     },
     output: {
         path: __dirname + '/lib',
-        filename: outputFile,
-        library: libraryName,
+        filename: 'react-flexpane.min.js',
         libraryTarget: 'umd',
         umdNamedDefine: true,
         globalObject: "typeof self !== 'undefined' ? self : this"
