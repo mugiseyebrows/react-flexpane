@@ -5,6 +5,7 @@ import classNames from "classnames"
 
 // nodemon -w src --exec npm run repack
 
+
 /** <FlexPaneBar><FlexPaneButtons/><FlexPaneTitle/></FlexPaneBar>
  * 
  */
@@ -19,7 +20,7 @@ export const FlexPaneBar = (props) => {
         }
         return child
     })
-    return <div className="flexpane-bar">{children}</div>
+    return <div className={classNames("flexpane-bar",props.className)}>{children}</div>
 }
 
 export const FlexPaneButtons = (props) => {
@@ -27,20 +28,21 @@ export const FlexPaneButtons = (props) => {
     let paneProps = props.paneProps || {}
 
     let mode = paneProps.index !== undefined ? paneProps.modes[paneProps.index] : "normal"
-    let classNames1 = classNames("flexpane-resize","flexpane-maximize",{"flexpane-button-active":mode !== "maximized"})
-    let classNames2 = classNames("flexpane-resize","flexpane-normalize",{"flexpane-button-active":mode !== "normal"})
-    let classNames3 = classNames("flexpane-resize","flexpane-hide",{"flexpane-button-active":mode !== "hidden"})
+    let classNames1 = classNames("flexpane-button","flexpane-maximize",{"flexpane-button-active":mode !== "maximized"})
+    let classNames2 = classNames("flexpane-button","flexpane-normalize",{"flexpane-button-active":mode !== "normal"})
+    let classNames3 = classNames("flexpane-button","flexpane-hide",{"flexpane-button-active":mode !== "hidden"})
 
-    return  <ul className="flexpane-buttons"> 
+    return  <ul className={classNames(props.className,"flexpane-buttons")}> 
                 <li key="0"><button className={classNames1} onClick={() => {paneProps.onButtonClick(paneProps.index,"maximized")}}><svg enableBackground="new 0 0 32 32" height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M18.221,7.206l9.585,9.585c0.879,0.879,0.879,2.317,0,3.195l-0.8,0.801c-0.877,0.878-2.316,0.878-3.194,0  l-7.315-7.315l-7.315,7.315c-0.878,0.878-2.317,0.878-3.194,0l-0.8-0.801c-0.879-0.878-0.879-2.316,0-3.195l9.587-9.585  c0.471-0.472,1.103-0.682,1.723-0.647C17.115,6.524,17.748,6.734,18.221,7.206z" fill="#515151"/></svg></button></li>
                 <li key="1"><button className={classNames2} onClick={() => {paneProps.onButtonClick(paneProps.index,"normal")}}><svg enableBackground="new 0 0 32 32" height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M24.291,14.276L14.705,4.69c-0.878-0.878-2.317-0.878-3.195,0l-0.8,0.8c-0.878,0.877-0.878,2.316,0,3.194  L18.024,16l-7.315,7.315c-0.878,0.878-0.878,2.317,0,3.194l0.8,0.8c0.878,0.879,2.317,0.879,3.195,0l9.586-9.587  c0.472-0.471,0.682-1.103,0.647-1.723C24.973,15.38,24.763,14.748,24.291,14.276z" fill="#515151"/></svg></button></li>
                 <li key="2"><button className={classNames3} onClick={() => {paneProps.onButtonClick(paneProps.index,"hidden")}}><svg enableBackground="new 0 0 32 32" height="32px" id="Layer_1" version="1.1" viewBox="0 0 32 32" width="32px" xmlSpace="preserve" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"><path d="M14.77,23.795L5.185,14.21c-0.879-0.879-0.879-2.317,0-3.195l0.8-0.801c0.877-0.878,2.316-0.878,3.194,0  l7.315,7.315l7.316-7.315c0.878-0.878,2.317-0.878,3.194,0l0.8,0.801c0.879,0.878,0.879,2.316,0,3.195l-9.587,9.585  c-0.471,0.472-1.104,0.682-1.723,0.647C15.875,24.477,15.243,24.267,14.77,23.795z" fill="#515151"/></svg></button></li>
             </ul>
 }
 
+
 export const FlexPaneTitle = (props) => {
     let paneProps = props.paneProps || {title: 'untitled'}
-    return <div className="flexpane-title">{paneProps.title}</div>
+    return <div className={classNames("flexpane-title",props.className)}>{paneProps.title}</div>
 }
 
 /**  <FlexPane> content </FlexPane>
@@ -62,15 +64,12 @@ export class FlexPane extends React.Component {
         let mode = paneProps.modes[paneProps.index]
 
         let classNames_ = {
+            "flexpane-pane": true,
             "flexpane-pane-normal" : mode === "normal",
             "flexpane-pane-maximum": mode === "maximized",
             "flexpane-pane-hidden": mode === "hidden"
         }
 
-        if (this.props.className !== undefined) {
-            classNames_[this.props.className] = true
-        }
-        
         let refPane = this.props.refPane || this.refPane
 
         let children = React.Children.toArray(this.props.children)
@@ -81,12 +80,12 @@ export class FlexPane extends React.Component {
             flexPaneBar = React.cloneElement(children[0], {paneProps})
             children = children.slice(1)
         } else {
-            flexPaneBar = <FlexPaneBar paneProps={paneProps}><FlexPaneButtons/><FlexPaneTitle/></FlexPaneBar>
+            flexPaneBar = <FlexPaneBar className={classNames(this.props.className)} paneProps={paneProps}><FlexPaneButtons/><FlexPaneTitle/></FlexPaneBar>
         }
 
         return <React.Fragment>
             {flexPaneBar}
-            <div key={this.props.index} className={classNames("flexpane-pane",classNames_)} ref={refPane} >{children}</div>
+            <div key={this.props.index} className={classNames(classNames_,this.props.className)} ref={refPane} >{children}</div>
             </React.Fragment>
     }
 }
@@ -99,7 +98,7 @@ export class FlexPaneContainer extends React.Component {
     constructor(props) {
         super(props)
         
-        let modes = React.Children.map(this.props.children, (child,index) => {
+        let modes = React.Children.map(this.props.children, (child) => {
             return child.props.mode || "normal";
         })
 

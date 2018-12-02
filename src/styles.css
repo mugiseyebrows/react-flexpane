@@ -26,7 +26,7 @@
 
 .flexpane-title {
     font-style: italic;
-    padding: 0 5px;
+    margin: 0 8px;
 }
 
 .flexpane-buttons {
@@ -39,11 +39,12 @@
     display: inline;
 }
 
+/*
 .flexpane-buttons ul {
     display: inline;
-}
+}*/
 
-.flexpane-buttons button.flexpane-resize {
+.flexpane-button {
     background: none;
     border: none;
     background-color: transparent;
@@ -52,13 +53,6 @@
     padding: 0;
     height: 22px;
     width: 22px;
-}
-
-.flexpane-buttons li.flexpane-title {
-    margin: 0;
-    padding: 0 10px;
-    width: auto;
-    font-style: italic;
 }
 
 .flexpane-pane-normal {
