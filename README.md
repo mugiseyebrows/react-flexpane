@@ -48,4 +48,4 @@ is the same as
 If you need custom elements in bar or you want to hide or rearrange buttons or title for some reason, use latter form.
 
 # Demo
-https://codepen.io/mugiseyebrows/pen/MzXxXo
+https://codepen.io/mugiseyebrows/pen/JexqZB

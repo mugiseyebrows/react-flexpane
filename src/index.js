@@ -9,13 +9,13 @@ import classNames from "classnames"
  * 
  */
 export const FlexPaneBar = (props) => {
-    let paneProps = props.paneProps
+
+    let paneProps = props.paneProps || {}
+
     let children = React.Children.map(props.children,(child) => {
-        if (child.type) {
-            if (child.type.name === 'FlexPaneButtons' || child.type.name === 'FlexPaneTitle') {
-                let buttons = React.cloneElement(child,{paneProps})
-                return buttons
-            }
+        if (child.type === FlexPaneButtons || child.type === FlexPaneTitle) {
+            let buttons = React.cloneElement(child,{paneProps})
+            return buttons
         }
         return child
     })
@@ -24,7 +24,7 @@ export const FlexPaneBar = (props) => {
 
 export const FlexPaneButtons = (props) => {
 
-    let paneProps = props.paneProps
+    let paneProps = props.paneProps || {}
 
     let mode = paneProps.index !== undefined ? paneProps.modes[paneProps.index] : "normal"
     let classNames1 = classNames("flexpane-resize","flexpane-maximize",{"flexpane-button-active":mode !== "maximized"})
@@ -39,7 +39,7 @@ export const FlexPaneButtons = (props) => {
 }
 
 export const FlexPaneTitle = (props) => {
-    let paneProps = props.paneProps
+    let paneProps = props.paneProps || {title: 'untitled'}
     return <div className="flexpane-title">{paneProps.title}</div>
 }
 
@@ -55,7 +55,8 @@ export class FlexPane extends React.Component {
 
     render() {
 
-        let paneProps = this.props.paneProps
+        let paneProps = this.props.paneProps || {}
+
         paneProps['title'] = this.props.title
 
         let mode = paneProps.modes[paneProps.index]
@@ -76,7 +77,7 @@ export class FlexPane extends React.Component {
 
         let flexPaneBar
 
-        if (children[0] && children[0].type && children[0].type.name === 'FlexPaneBar') {
+        if (children[0] && children[0].type === FlexPaneBar) {
             flexPaneBar = React.cloneElement(children[0], {paneProps})
             children = children.slice(1)
         } else {
@@ -121,7 +122,8 @@ export class FlexPaneContainer extends React.Component {
     render() {
         let children = React.Children.map(this.props.children, (child,index) => {
             let paneProps = {modes:this.state.modes, index:index, onButtonClick: this.handleButtonClick}
-            return React.cloneElement(child,{paneProps});
+            child = React.cloneElement(child,{paneProps})
+            return child
         })
         return (<div className="flexpane-container">{children}</div>)
     }
