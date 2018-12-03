@@ -23,6 +23,8 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
+    "prop-types": "^15.6.2",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.20",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
@@ -39,7 +41,8 @@
     "start": "webpack-dev-server --mode development",
     "pack": "rm -rf dist && babel src -d dist --copy-files",
     "repack": "babel src -d dist --copy-files --source-maps",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "repack-and-build": "npm run repack | npm run build"
   },
   "license": "MIT"
 }

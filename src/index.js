@@ -3,11 +3,11 @@ import React from "react"
 
 import classNames from "classnames"
 
-// nodemon -w src --exec npm run repack
+import PropTypes from 'prop-types'
 
+// nodemon -w src --exec npm run repack-and-build
 
 /** <FlexPaneBar><FlexPaneButtons/><FlexPaneTitle/></FlexPaneBar>
- * 
  */
 export const FlexPaneBar = (props) => {
 
@@ -46,7 +46,6 @@ export const FlexPaneTitle = (props) => {
 }
 
 /**  <FlexPane> content </FlexPane>
- *   <FlexPane><FlexPaneBar/> content </FlexPane>
  */
 export class FlexPane extends React.Component {
 
@@ -85,7 +84,7 @@ export class FlexPane extends React.Component {
 
         return <React.Fragment>
             {flexPaneBar}
-            <div key={this.props.index} className={classNames(classNames_,this.props.className)} ref={refPane} >{children}</div>
+            <div key={paneProps.index} className={classNames(classNames_,this.props.className)} ref={refPane} >{children}</div>
             </React.Fragment>
     }
 }
@@ -128,3 +127,13 @@ export class FlexPaneContainer extends React.Component {
     }
 }
 
+// propTypes
+FlexPane.propTypes = {
+    title: PropTypes.string,
+    mode: PropTypes.string
+}
+
+FlexPane.defaultProps = {
+    title: 'untitled',
+    mode: 'normal'
+};

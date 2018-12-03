@@ -15,6 +15,10 @@ var _classnames = require("classnames");
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
+var _propTypes = require("prop-types");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -23,11 +27,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// nodemon -w src --exec npm run repack
-
+// nodemon -w src --exec npm run repack-and-build
 
 /** <FlexPaneBar><FlexPaneButtons/><FlexPaneTitle/></FlexPaneBar>
- * 
  */
 var FlexPaneBar = exports.FlexPaneBar = function FlexPaneBar(props) {
 
@@ -117,7 +119,6 @@ var FlexPaneTitle = exports.FlexPaneTitle = function FlexPaneTitle(props) {
 };
 
 /**  <FlexPane> content </FlexPane>
- *   <FlexPane><FlexPaneBar/> content </FlexPane>
  */
 
 var FlexPane = exports.FlexPane = function (_React$Component) {
@@ -173,7 +174,7 @@ var FlexPane = exports.FlexPane = function (_React$Component) {
                 flexPaneBar,
                 _react2.default.createElement(
                     "div",
-                    { key: this.props.index, className: (0, _classnames2.default)(classNames_, this.props.className), ref: refPane },
+                    { key: paneProps.index, className: (0, _classnames2.default)(classNames_, this.props.className), ref: refPane },
                     children
                 )
             );
@@ -240,4 +241,17 @@ var FlexPaneContainer = exports.FlexPaneContainer = function (_React$Component2)
 
     return FlexPaneContainer;
 }(_react2.default.Component);
+
+// propTypes
+
+
+FlexPane.propTypes = {
+    title: _propTypes2.default.string,
+    mode: _propTypes2.default.string
+};
+
+FlexPane.defaultProps = {
+    title: 'untitled',
+    mode: 'normal'
+};
 //# sourceMappingURL=index.js.map
